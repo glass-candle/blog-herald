@@ -1,0 +1,119 @@
+require: rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.0.1
+    
+Style/FrozenStringLiteralComment:
+  Include:
+    - app/**/*
+    - core/**/*
+    - system/**/*
+    - config/**/*
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - system/boot/*
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Max: 20
+
+Layout/LineLength:
+  Max: 150
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - system/boot/*
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: key
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Style/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+Layout/MultilineAssignmentLayout:
+  EnforcedStyle: new_line
+
+Layout/MultilineBlockLayout:
+  Enabled: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: new_line
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineMethodDefinitionBraceLayout:
+  EnforcedStyle: new_line
+
+Layout/SpaceAroundOperators:
+  AllowForAlignment: false
+
+Layout/SpaceBeforeBrackets:
+  Enabled: true
+
+Layout/FirstMethodParameterLineBreak:
+  Enabled: true
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Layout/BlockAlignment:
+  EnforcedStyleAlignWith: start_of_block
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/ClassStructure:
+  Enabled: true
+  ExpectedOrder:
+      - module_inclusion
+      - constants
+      - attributes
+      - public_class_methods
+      - initializer
+      - public_methods
+      - protected_methods
+      - private_methods

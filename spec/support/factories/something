@@ -1,0 +1,6 @@
+ROMFactory.define(:something) do |f|
+  f.sequence(:name) { |n| "Airline #{n}" }
+  f.sequence(:code) { |n| "AL#{n}" }
+  f.sequence(:logo) { |n| "airline_#{n}.png" }
+  f.show_warning false
+end
