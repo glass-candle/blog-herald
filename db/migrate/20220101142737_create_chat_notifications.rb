@@ -2,7 +2,7 @@
 
 ROM::SQL.migration do
   change do
-    create_table :notifications do
+    create_table :chat_notifications do
       primary_key :id
       foreign_key :chat_id, :chats
       foreign_key :post_id, :posts

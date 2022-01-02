@@ -3,8 +3,8 @@
 module Infra
   module Persistence
     module Relations
-      class Notifications < ROM::Relation[:sql]
-        schema(:notifications, infer: true) do
+      class ChatNotifications < ROM::Relation[:sql]
+        schema(:chat_notifications, infer: true) do
           associations do
             belongs_to :chat
             belongs_to :post

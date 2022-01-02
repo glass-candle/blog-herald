@@ -11,11 +11,11 @@ App.boot(:utils) do
     require 'dry/monads/all'
     require 'dry-transformer'
     require 'dry-types'
+    require 'dry/effects'
     Dry::Validation.load_extensions(:monads)
     Import = App.injector
 
     require 'oj'
-
     require 'typhoeus'
   end
 end

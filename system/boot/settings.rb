@@ -11,5 +11,7 @@ App.boot(:settings, from: :system) do
     key :sentry_dsn, Types::Coercible::String.default('')
 
     key :database_url, Types::Coercible::String
+
+    key :bot_token, Types::Coercible::String
   end
 end

@@ -8,6 +8,7 @@ gem 'rake', '~> 13.0'
 gem 'zeitwerk', '~> 2.4'
 
 # Utils
+gem 'dry-effects', '~> 0.2'
 gem 'dry-monads', '~> 1.3'
 gem 'dry-struct', '~> 1.0'
 gem 'dry-system', '~> 0.21'
