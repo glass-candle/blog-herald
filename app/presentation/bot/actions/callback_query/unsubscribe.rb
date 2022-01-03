@@ -5,9 +5,7 @@ module Presentation
     module Actions
       module CallbackQuery
         class Unsubscribe
-          include Import[
-            'application.operations.chat.unsubscribe'
-          ]
+          include Import['application.operations.chat.unsubscribe']
 
           include Actions::Params.new(prefix: 'unsubscribe')
 

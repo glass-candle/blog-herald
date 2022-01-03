@@ -5,9 +5,7 @@ module Presentation
     module Actions
       module CallbackQuery
         class Subscribe
-          include Import[
-            'application.operations.chat.subscribe'
-          ]
+          include Import['application.operations.chat.subscribe']
 
           include Actions::Params.new(prefix: 'subscribe')
 

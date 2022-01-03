@@ -7,8 +7,8 @@ module Presentation
         class OptOut
           include Import[
             'application.operations.chat.opt_out',
-            'presentation.bot.responses.reply_markup.settings_navigation',
-            'presentation.bot.responses.text.settings_prompt'
+            'presentation.bot.responses.text.settings_prompt',
+            'presentation.bot.responses.reply_markup.settings_navigation'
           ]
 
           include Dry::Effects.Reader(:bot_adapter)
@@ -16,7 +16,7 @@ module Presentation
           include Dry::Monads::Do.for(:call)
 
           def call(chat_id, message_id)
-            yield opt_in.call(chat_id)
+            yield opt_out.call(chat_id)
 
             yield bot_adapter.send_message(chat_id: chat_id, text: "You have successfully unsubscribed and won't be receiving any updates.")
             bot_adapter.edit_message_text(

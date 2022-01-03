@@ -3,7 +3,7 @@
 module Presentation
   class Bot
     module Actions
-      module CallbackQuery
+      module Message
         class Settings
           include Import[
             'application.operations.chat.opt_in_status',

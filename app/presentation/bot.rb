@@ -13,6 +13,8 @@ module Presentation
             action_handler.call(payload_object)
           end
         end
+      rescue StandardError => e
+        redo
       end
     end
   end

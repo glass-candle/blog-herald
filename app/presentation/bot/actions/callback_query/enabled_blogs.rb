@@ -22,9 +22,14 @@ module Presentation
           def call(chat_id, message_id, path)
             blogs = yield list_subscribed_blogs.call(chat_id)
 
-            paged_blogs = yield paginate(path, blogs, PAGE_SIZE)
+            current_page, total_pages, paged_blogs = paginate(path, blogs, PAGE_SIZE)
             text = subscription_blog_list.render(paged_blogs: paged_blogs, only_subscribed: true)
-            reply_markup = paged_blog_list_navigation.render(paged_blogs: paged_blogs)
+            reply_markup = paged_blog_list_navigation.render(
+              path: path,
+              paged_blogs: paged_blogs,
+              current_page: current_page,
+              total_pages: total_pages
+            )
 
             bot_adapter.edit_message_text(
               chat_id: chat_id,

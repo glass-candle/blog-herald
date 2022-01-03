@@ -20,21 +20,21 @@ module Presentation
 
         def call(chat_id:, message_id:, data:)
           with_action_processor(self) do
-            case callback_query.data
+            case data
             in /^settings$/
               settings.call(chat_id, message_id)
             in /^opt_in$/
-              subscribe.call(chat_id, message_id)
+              opt_in.call(chat_id, message_id)
             in /^opt_out$/
-              unsubscribe.call(chat_id, message_id)
+              opt_out.call(chat_id, message_id)
             in /^available_blogs/
               available_blogs.call(chat_id, message_id, data)
             in /^enabled_blogs/
               enabled_blogs.call(chat_id, message_id, data)
             in /^subscribe/
-              disable_blog.call(chat_id, message_id, data)
+              subscribe.call(chat_id, message_id, data)
             in /^unsubscribe/
-              enable_blog.call(chat_id, message_id, data)
+              unsubscribe.call(chat_id, message_id, data)
             else
               Success(:unmatched)
             end

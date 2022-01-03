@@ -3,11 +3,10 @@
 App.boot(:logger) do |container|
   init do
     use :utils
+    use :settings
 
     require 'stringio'
     require 'semantic_logger'
-
-    use :settings
 
     logger_level = container[:settings].logger_level
 

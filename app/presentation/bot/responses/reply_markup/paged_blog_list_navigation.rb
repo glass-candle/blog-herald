@@ -42,7 +42,7 @@ module Presentation
             end
           end
 
-          def pagination_buttons(current_page, total_pages, redirect_path) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
+          def pagination_buttons(current_page, total_pages, redirect_path) # rubocop:disable Metrics/CyclomaticComplexity
             buttons = []
             return buttons if total_pages.zero?
 
@@ -54,16 +54,16 @@ module Presentation
                 'available_blogs'
               end
 
-            if page_number.positive? && page_number != 1
+            if current_page.positive? && current_page != 1
               buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏮ First', callback_data: "#{callback_path}:0")
             end
-            if page_number - 1 >= 0
+            if current_page - 1 >= 0
               buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏪ Previous', callback_data: "#{callback_path}:#{current_page - 1}")
             end
-            if page_number + 1 <= pages_count
+            if current_page + 1 <= total_pages
               buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏩ Next', callback_data: "#{callback_path}:#{current_page + 1}")
             end
-            if page_number < pages_count && page_number != pages_count - 1
+            if current_page < total_pages && current_page != total_pages - 1
               buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏭ Last', callback_data: "#{callback_path}:#{total_pages}")
             end
 

@@ -8,8 +8,8 @@ module Presentation
 
         include Dry::Monads::Result::Mixin
 
-        def call(chat_id:)
-          case message.text
+        def call(chat_id:, text:)
+          case text
           in %r{^/settings$}
             settings.call(chat_id)
           else

@@ -7,8 +7,8 @@ module Presentation
         class Settings
           include Import[
             'application.operations.chat.opt_in_status',
-            'presentation.bot.responses.reply_markup.settings_navigation',
-            'presentation.bot.responses.text.settings_prompt'
+            'presentation.bot.responses.text.settings_prompt',
+            'presentation.bot.responses.reply_markup.settings_navigation'
           ]
 
           include Dry::Effects.Reader(:bot_adapter)

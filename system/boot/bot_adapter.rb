@@ -4,6 +4,8 @@ App.boot(:bot_adapter) do |container|
   init do
     use :utils
     use :settings
+    use :persistence
+    use :zeitwerk
 
     require 'telegram/bot'
 
@@ -24,9 +26,23 @@ App.boot(:bot_adapter) do |container|
       end
 
       def listen
-        @bot_client.listen do |message|
-          yield(message)
-        rescue Telegram::Bot::Exceptions::Base => e
+        @bot_client.listen do |payload_object|
+          payload_object =
+            case payload_object
+            in Telegram::Bot::Types::Message
+              Presentation::Bot::Message.new(
+                chat_id: payload_object.chat.id,
+                text: payload_object.text
+              )
+            in Telegram::Bot::Types::CallbackQuery
+              Presentation::Bot::CallbackQuery.new(
+                chat_id: payload_object.message.chat.id,
+                message_id: payload_object.message.message_id,
+                data: payload_object.data
+              )
+            end
+
+          yield(payload_object)
         end
       end
 
@@ -38,12 +54,16 @@ App.boot(:bot_adapter) do |container|
         )
 
         Success(response)
+      rescue Telegram::Bot::Exceptions::Base => e
+        Failure(msg: :telegram_bot_exception, exception: e)
       end
 
       def send_message(chat_id:, **data)
         response = @bot_client.api.send_message(chat_id: chat_id, **data)
 
         Success(response)
+      rescue Telegram::Bot::Exceptions::Base => e
+        Failure(msg: :telegram_bot_exception, exception: e)
       end
     end
 

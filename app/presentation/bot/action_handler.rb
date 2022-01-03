@@ -10,6 +10,8 @@ module Presentation
 
       include Dry::Effects.Reader(:bot_adapter)
 
+      include Dry::Monads::Result::Mixin
+
       def call(payload_object)
         handle_result(
           payload_object,
@@ -21,31 +23,36 @@ module Presentation
 
       def process(payload_object)
         case payload_object
-        in Telegram::Bot::Types::CallbackQuery => callback_query
+        in Bot::CallbackQuery => callback_query
           callback_query_processor.call(
-            chat_id: callback_query.message.chat.id,
-            message_id: callback_query.message.message_id,
+            chat_id: callback_query.chat_id,
+            message_id: callback_query.message_id,
             data: callback_query.data
           )
-        in Telegram::Bot::Types::Message => message
+        in Bot::Message => message
           message_processor.call(
-            chat_id: message.chat.id
+            chat_id: message.chat_id,
+            text: message.text
           )
         else
           Success(:unknown_payload_type)
         end
       end
 
-      def handle_result(payload_object, _result)
+      def handle_result(payload_object, result)
+        return result if result.success?
+
         chat_id =
           case payload_object
-          in Telegram::Bot::Types::CallbackQuery => callback_query
-            callback_query.message.chat.id
-          in Telegram::Bot::Types::Message => message
-            message.chat.id
+          in Bot::CallbackQuery => callback_query
+            callback_query.chat_id
+          in Bot::Message => message
+            message.chat_id
           end
 
         bot_adapter.send_message(chat_id: chat_id, text: 'Whoops! Something went wrong, try again.')
+
+        result
       end
     end
   end
