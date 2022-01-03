@@ -46,10 +46,19 @@ App.boot(:bot_adapter) do |container|
         end
       end
 
-      def edit_message_text(chat_id:, message_id:, **data)
+      def edit_message_text(chat_id:, message_id:, reply_markup:, **data)
+        reply_markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(
+          inline_keyboard: reply_markup.button_rows.map do |row|
+            row.map do |button|
+              Telegram::Bot::Types::InlineKeyboardButton.new(text: button.txt, callback_data: button.callback_data)
+            end
+          end
+        )
+
         response = @bot_client.api.edit_message_text(
           chat_id: chat_id,
           message_id: message_id,
+          reply_markup: reply_markup,
           **data
         )
 

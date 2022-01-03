@@ -6,13 +6,13 @@ module Presentation
       module ReplyMarkup
         class PagedBlogListNavigation
           def render(path:, paged_blogs:, current_page:, total_pages:)
-            keyboard = [
+            button_rows = [
               navigation_buttons(path),
               blog_actions(paged_blogs, path),
               pagination_buttons(current_page, total_pages, path)
             ]
 
-            Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: keyboard)
+            Responses::Keyboard.new(button_rows: button_rows)
           end
 
           private
@@ -27,18 +27,20 @@ module Presentation
               end
 
             [
-              Telegram::Bot::Types::InlineKeyboardButton.new(text: '↩️ Back', callback_data: 'settings'),
-              Telegram::Bot::Types::InlineKeyboardButton.new(text: text, callback_data: callback_data)
+              Responses::Button.new(text: '↩️ Back', callback_data: 'settings'),
+              Responses::Button.new(text: text, callback_data: callback_data)
             ]
           end
 
           def blog_actions(paged_blogs, redirect_path)
-            paged_blogs.map do |paged_blog|
+            paged_blogs.filter_map do |paged_blog|
+              next unless paged_blog[:in_page]
+
               blog = paged_blog[:item]
               text = blog.subscribed ? "❌ Unsubscribe from #{blog.title}" : "✅ Subscribe to #{blog.title}"
               callback_data = blog.subscribed ? "disable_blog:#{blog.codename}|#{redirect_path}" : "enable_blog:#{blog.codename}|#{redirect_path}"
 
-              Telegram::Bot::Types::InlineKeyboardButton.new(text: text, callback_data: callback_data)
+              Responses::Button.new(text: text, callback_data: callback_data)
             end
           end
 
@@ -48,23 +50,17 @@ module Presentation
 
             callback_path =
               case redirect_path
-              in /$enabled_blogs/
+              in /^enabled_blogs/
                 'enabled_blogs'
-              in /$available_blogs/
+              in /^available_blogs/
                 'available_blogs'
               end
 
-            if current_page.positive? && current_page != 1
-              buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏮ First', callback_data: "#{callback_path}:0")
-            end
-            if current_page - 1 >= 0
-              buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏪ Previous', callback_data: "#{callback_path}:#{current_page - 1}")
-            end
-            if current_page + 1 <= total_pages
-              buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏩ Next', callback_data: "#{callback_path}:#{current_page + 1}")
-            end
+            buttons << Responses::Button.new(text: '⏮ First', callback_data: "#{callback_path}:0") if current_page.positive? && current_page != 1
+            buttons << Responses::Button.new(text: '⏪ Previous', callback_data: "#{callback_path}:#{current_page - 1}") if current_page - 1 >= 0
+            buttons << Responses::Button.new(text: '⏩ Next', callback_data: "#{callback_path}:#{current_page + 1}") if current_page + 1 <= total_pages
             if current_page < total_pages && current_page != total_pages - 1
-              buttons << Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏭ Last', callback_data: "#{callback_path}:#{total_pages}")
+              buttons << Responses::Button.new(text: '⏭ Last', callback_data: "#{callback_path}:#{total_pages}")
             end
 
             buttons

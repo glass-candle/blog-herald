@@ -6,7 +6,7 @@ module Presentation
       module Text
         class BlogList
           def render(blogs:)
-            return 'No blogs available' if paged_blogs.empty?
+            return 'No blogs available' if blogs.empty?
 
             blog_list = blogs.map do |blog|
               "#{blog.title} - #{blog.link}"

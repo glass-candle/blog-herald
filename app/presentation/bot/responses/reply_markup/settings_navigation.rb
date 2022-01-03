@@ -6,21 +6,21 @@ module Presentation
       module ReplyMarkup
         class SettingsNavigation
           def render(is_opted_in:)
-            keyboard =
+            button_rows =
               case is_opted_in
               in true
                 [
-                  Telegram::Bot::Types::InlineKeyboardButton.new(text: '⏹ Unsubscribe', callback_data: 'unsubscribe'),
-                  Telegram::Bot::Types::InlineKeyboardButton.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
+                  Responses::Button.new(text: '⏹ Unsubscribe', callback_data: 'unsubscribe'),
+                  Responses::Button.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
                 ]
               in false
                 [
-                  Telegram::Bot::Types::InlineKeyboardButton.new(text: '▶️ Subscribe', callback_data: 'subscribe'),
-                  Telegram::Bot::Types::InlineKeyboardButton.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
+                  Responses::Button.new(text: '▶️ Subscribe', callback_data: 'subscribe'),
+                  Responses::Button.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
                 ]
               end
 
-            Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: keyboard)
+            Responses::Keyboard.new(button_rows: button_rows)
           end
         end
       end

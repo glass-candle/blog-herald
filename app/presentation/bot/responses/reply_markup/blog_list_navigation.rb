@@ -6,11 +6,11 @@ module Presentation
       module ReplyMarkup
         class BlogListNavigation
           def render
-            keyboard = [
-              Telegram::Bot::Types::InlineKeyboardButton.new(text: '↩️ Back', callback_data: 'settings')
+            button_rows = [
+              Responses::Button.new(text: '↩️ Back', callback_data: 'settings')
             ]
 
-            Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: keyboard)
+            Responses::Keyboard.new(button_rows: button_rows)
           end
         end
       end

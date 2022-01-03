@@ -11,11 +11,7 @@ module Presentation
             blog_list = paged_blogs.map do |paged_blog|
               blog = paged_blog[:item]
               text = paged_blog[:in_page] ? " > *#{blog.title} -* #{blog.link}" : "#{blog.title} - #{blog.link}"
-              if only_subscribed
-                "✅#{text}"
-              else
-                blog.subscribed ? "✅#{text}" : "❌#{text}"
-              end
+              blog.subscribed ? "✅#{text}" : "❌#{text}"
             end.join("\n")
 
             list_text(blog_list, only_subscribed)
@@ -32,7 +28,7 @@ module Presentation
             end
           end
 
-          def list_text(only_subscribed)
+          def list_text(blog_list, only_subscribed)
             case only_subscribed
             in true
               <<~TEXT
