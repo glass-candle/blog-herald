@@ -14,7 +14,7 @@ App.boot(:bot_adapter) do |container|
 
       class << self
         def run
-          Telegram::Bot::Client.run(container[:settings].bot_token) do |bot_client|
+          Telegram::Bot::Client.run(App[:settings].bot_token) do |bot_client|
             bot_adapter = new(bot_client)
             yield(bot_adapter)
           end
@@ -47,13 +47,7 @@ App.boot(:bot_adapter) do |container|
       end
 
       def edit_message_text(chat_id:, message_id:, reply_markup:, **data)
-        reply_markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(
-          inline_keyboard: reply_markup.button_rows.map do |row|
-            row.map do |button|
-              Telegram::Bot::Types::InlineKeyboardButton.new(text: button.txt, callback_data: button.callback_data)
-            end
-          end
-        )
+        reply_markup = convert_keyboard(reply_markup)
 
         response = @bot_client.api.edit_message_text(
           chat_id: chat_id,
@@ -68,11 +62,33 @@ App.boot(:bot_adapter) do |container|
       end
 
       def send_message(chat_id:, **data)
-        response = @bot_client.api.send_message(chat_id: chat_id, **data)
+        arguments = { chat_id: chat_id, **data }
+
+        arguments[:reply_markup] = convert_keyboard(data[:reply_markup]) if data[:reply_markup]
+
+        response = @bot_client.api.send_message(arguments)
 
         Success(response)
       rescue Telegram::Bot::Exceptions::Base => e
         Failure(msg: :telegram_bot_exception, exception: e)
+      end
+
+      private
+
+      def convert_keyboard(reply_markup)
+        Telegram::Bot::Types::InlineKeyboardMarkup.new(
+          inline_keyboard: reply_markup.button_rows.map do |row|
+            case row
+            in Array
+              row.map do |button|
+                Telegram::Bot::Types::InlineKeyboardButton.new(text: button.text, callback_data: button.callback_data)
+              end
+            else
+              button = row
+              Telegram::Bot::Types::InlineKeyboardButton.new(text: button.text, callback_data: button.callback_data)
+            end
+          end
+        )
       end
     end
 

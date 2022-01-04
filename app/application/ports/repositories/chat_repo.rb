@@ -14,16 +14,19 @@ module Application
 
         def subscription_exists?(chat_uid, blog_codename)
           chat = chats.combine(:blogs).where(chat_uid: chat_uid).limit(1).one
-          !chat.blogs.find { |blog| blog.blog_codename == blog_codename }.nil?
+          !chat.blogs.find { |blog| blog.codename == blog_codename }.nil?
         end
 
-        def create_with_blogs(chat_uid, blogs)
+        def create_with_blogs(chat_uid, blogs) # rubocop:disable Metrics/AbcSize
           chats.transaction do
-            chat = chats.changeset(:create, chat_uid: chat_uid).map(:add_timestamps).commit
+            chat = chats
+              .changeset(:create, chat_uid: chat_uid)
+              .map { |tuple| tuple.merge(created_at: Time.now.utc, updated_at: Time.now.utc) }
+              .commit
 
             join_table_changeset = chats_blogs
               .changeset(:create, blogs.map { |blog| { blog_id: blog.id, chat_id: chat.id } })
-              .map(:add_timestamps)
+              .map { |tuple| tuple.merge(created_at: Time.now.utc, updated_at: Time.now.utc) }
             chats_blogs.command(:create, result: :many).call(join_table_changeset)
 
             chat
@@ -37,7 +40,7 @@ module Application
         def subscribe_to_blog(chat, blog)
           chats_blogs
             .changeset(:create, { blog_id: blog.id, chat_id: chat.id })
-            .map(:add_timestamps)
+            .map { |tuple| tuple.merge(created_at: Time.now.utc, updated_at: Time.now.utc) }
             .commit
         end
 

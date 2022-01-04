@@ -55,10 +55,10 @@ RSpec.describe Presentation::Bot::Responses::ReplyMarkup::PagedBlogListNavigatio
       let(:current_page) { 0 }
       let(:total_pages) { 1 }
 
-      it 'returns a keyboard object with a valid third row' do
+      it 'returns a keyboard object with a valid last row' do
         keyboard = subject.render(path: path, paged_blogs: paged_blogs, current_page: current_page, total_pages: total_pages)
 
-        expect(keyboard.button_rows[2]).to contain_exactly(
+        expect(keyboard.button_rows.last).to contain_exactly(
           Presentation::Bot::Responses::Button.new(text: '⏩ Next', callback_data: 'available_blogs:1')
         )
       end
@@ -68,26 +68,26 @@ RSpec.describe Presentation::Bot::Responses::ReplyMarkup::PagedBlogListNavigatio
       let(:current_page) { 1 }
       let(:total_pages) { 1 }
 
-      it 'returns a keyboard object with a valid third row' do
+      it 'returns a keyboard object with a valid last row' do
         keyboard = subject.render(path: path, paged_blogs: paged_blogs, current_page: current_page, total_pages: total_pages)
 
-        expect(keyboard.button_rows[2]).to contain_exactly(
+        expect(keyboard.button_rows.last).to contain_exactly(
           Presentation::Bot::Responses::Button.new(text: '⏪ Previous', callback_data: 'available_blogs:0')
         )
       end
     end
 
-    it 'returns a keyboard object with a valid second row' do
+    it 'returns a keyboard object with valid subscription rows' do
       keyboard = subject.render(path: path, paged_blogs: paged_blogs, current_page: current_page, total_pages: total_pages)
 
-      expect(keyboard.button_rows[1]).to contain_exactly(
+      expect(keyboard.button_rows[1..-2]).to contain_exactly(
         *subscribed_blogs.map do |paged_blog|
           blog = paged_blog[:item]
-          Presentation::Bot::Responses::Button.new(text: "❌ Unsubscribe from #{blog.title}", callback_data: "disable_blog:#{blog.codename}|#{path}")
+          Presentation::Bot::Responses::Button.new(text: "❌ Unsubscribe from #{blog.title}", callback_data: "unsubscribe:#{blog.codename}|#{path}")
         end,
         *unsubscribed_blogs.first(2).map do |paged_blog|
           blog = paged_blog[:item]
-          Presentation::Bot::Responses::Button.new(text: "✅ Subscribe to #{blog.title}", callback_data: "enable_blog:#{blog.codename}|#{path}")
+          Presentation::Bot::Responses::Button.new(text: "✅ Subscribe to #{blog.title}", callback_data: "subscribe:#{blog.codename}|#{path}")
         end
       )
     end

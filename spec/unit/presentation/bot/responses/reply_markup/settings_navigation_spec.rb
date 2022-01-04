@@ -9,7 +9,7 @@ RSpec.describe Presentation::Bot::Responses::ReplyMarkup::SettingsNavigation, ty
         keyboard = subject.render(is_opted_in: is_opted_in)
 
         expect(keyboard.button_rows).to contain_exactly(
-          Presentation::Bot::Responses::Button.new(text: '⏹ Unsubscribe', callback_data: 'unsubscribe'),
+          Presentation::Bot::Responses::Button.new(text: '⏹ Unsubscribe', callback_data: 'opt_out'),
           Presentation::Bot::Responses::Button.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
         )
       end
@@ -22,7 +22,7 @@ RSpec.describe Presentation::Bot::Responses::ReplyMarkup::SettingsNavigation, ty
         keyboard = subject.render(is_opted_in: is_opted_in)
 
         expect(keyboard.button_rows).to contain_exactly(
-          Presentation::Bot::Responses::Button.new(text: '▶️ Subscribe', callback_data: 'subscribe'),
+          Presentation::Bot::Responses::Button.new(text: '▶️ Subscribe', callback_data: 'opt_in'),
           Presentation::Bot::Responses::Button.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
         )
       end

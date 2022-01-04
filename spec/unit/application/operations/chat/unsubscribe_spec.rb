@@ -41,7 +41,10 @@ RSpec.describe Application::Operations::Chat::Unsubscribe, type: :unit_test do
     before do
       allow(blog_repo).to receive(:by_codename).with(blog_codename).and_return(blog)
       allow(chat_repo).to receive(:by_chat_uid).with(chat_uid).and_return(chat)
-      allow(unsubscription_contract).to receive(:call).with(chat_uid, blog_codename).and_return(Dry::Monads::Result::Failure.new({}))
+      allow(unsubscription_contract).to receive(:call).with(
+        chat_uid: chat_uid,
+        blog_codename: blog_codename
+      ).and_return(Dry::Monads::Result::Failure.new({}))
     end
 
     it 'returns a Failure' do
@@ -53,7 +56,10 @@ RSpec.describe Application::Operations::Chat::Unsubscribe, type: :unit_test do
     before do
       allow(blog_repo).to receive(:by_codename).with(blog_codename).and_return(blog)
       allow(chat_repo).to receive(:by_chat_uid).with(chat_uid).and_return(chat)
-      allow(unsubscription_contract).to receive(:call).with(chat_uid, blog_codename).and_return(Dry::Monads::Result::Success.new({}))
+      allow(unsubscription_contract).to receive(:call).with(
+        chat_uid: chat_uid,
+        blog_codename: blog_codename
+      ).and_return(Dry::Monads::Result::Success.new({}))
       allow(chat_repo).to receive(:unsubscribe_from_blog).with(chat, blog).and_return(chat)
     end
 

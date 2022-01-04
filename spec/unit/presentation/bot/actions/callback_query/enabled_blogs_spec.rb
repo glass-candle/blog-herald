@@ -39,7 +39,6 @@ RSpec.describe Presentation::Bot::Actions::CallbackQuery::EnabledBlogs, type: :u
       allow(bot_adapter).to receive(:edit_message_text).with(
         chat_id: chat_id,
         message_id: message_id,
-        parse_mode: 'markdown',
         disable_web_page_preview: true,
         text: text,
         reply_markup: reply_markup

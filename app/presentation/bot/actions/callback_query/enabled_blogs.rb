@@ -34,7 +34,6 @@ module Presentation
             bot_adapter.edit_message_text(
               chat_id: chat_id,
               message_id: message_id,
-              parse_mode: 'markdown',
               disable_web_page_preview: true,
               text: text,
               reply_markup: reply_markup

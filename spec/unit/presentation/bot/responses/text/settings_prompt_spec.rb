@@ -8,7 +8,7 @@ RSpec.describe Presentation::Bot::Responses::Text::SettingsPrompt, type: :unit_t
       it 'returns a correct text' do
         text = subject.render(is_opted_in: is_opted_in)
 
-        expect(text).to eq("Hey! If you don't want to receieve any more blogpost updates, press the 'Unsubscribe' button down below.")
+        expect(text).to eq("Hey! If you don't want to receive any more blogpost updates, press the 'Unsubscribe' button down below.")
       end
     end
 

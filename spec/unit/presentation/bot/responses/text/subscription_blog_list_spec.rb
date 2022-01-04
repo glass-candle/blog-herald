@@ -32,9 +32,9 @@ RSpec.describe Presentation::Bot::Responses::Text::SubscriptionBlogList, type: :
           expect(text).to eq(<<~TEXT)
             You are subscribed to the following blogs:
 
-            ✅ > *blog_a -* link_a
-            ✅ > *blog_b -* link_b
-            ✅ > *blog_c -* link_c
+            ✅  > blog_a - link_a
+            ✅  > blog_b - link_b
+            ✅  > blog_c - link_c
           TEXT
         end
       end
@@ -62,12 +62,12 @@ RSpec.describe Presentation::Bot::Responses::Text::SubscriptionBlogList, type: :
           expect(text).to eq(<<~TEXT)
             The following blogs are available:
 
-            ✅ > *blog_a -* link_a
-            ✅ > *blog_b -* link_b
-            ✅ > *blog_c -* link_c
-            ❌ > *blog_d -* link_d
-            ❌blog_e - link_e
-            ❌blog_f - link_f
+            ✅  > blog_a - link_a
+            ✅  > blog_b - link_b
+            ✅  > blog_c - link_c
+            ❌  > blog_d - link_d
+            ❌ blog_e - link_e
+            ❌ blog_f - link_f
           TEXT
         end
       end

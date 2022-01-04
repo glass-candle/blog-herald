@@ -10,12 +10,13 @@ module Presentation
               case is_opted_in
               in true
                 [
-                  Responses::Button.new(text: '⏹ Unsubscribe', callback_data: 'unsubscribe'),
+
+                  Responses::Button.new(text: '⏹ Unsubscribe', callback_data: 'opt_out'),
                   Responses::Button.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
                 ]
               in false
                 [
-                  Responses::Button.new(text: '▶️ Subscribe', callback_data: 'subscribe'),
+                  Responses::Button.new(text: '▶️ Subscribe', callback_data: 'opt_in'),
                   Responses::Button.new(text: '🔠 Available blogs', callback_data: 'available_blogs:0')
                 ]
               end

@@ -25,7 +25,7 @@ RSpec.describe Presentation::Bot::Actions::CallbackQuery::OptIn, type: :unit_tes
     before do
       allow(bot_adapter).to receive(:send_message).with(
         chat_id: chat_id,
-        text: 'You have successfully subscribed.'
+        text: 'You have subscribed and will start receiving blogpost notifications.'
       ).and_return(Dry::Monads::Result::Success.new(:ok))
 
       allow(bot_adapter).to receive(:edit_message_text).with(

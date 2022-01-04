@@ -5,7 +5,7 @@ module Presentation
     module Actions
       class Params < Module
         def initialize(prefix:)
-          regexp = Regexp.new("#{prefix}:(?<param>[a-z]+)")
+          regexp = Regexp.new("#{prefix}:(?<param>[a-z_0-9]+)")
 
           define_params(regexp)
 
@@ -17,7 +17,6 @@ module Presentation
         def define_params(regexp)
           define_method(:params) do |path|
             current_path, callback_path = path.split('|')
-
             param = regexp.match(current_path)&.[]('param')
             raise ArgumentError, 'invalid param' unless param
 

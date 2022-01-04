@@ -8,9 +8,9 @@ module Presentation
           def render(path:, paged_blogs:, current_page:, total_pages:)
             button_rows = [
               navigation_buttons(path),
-              blog_actions(paged_blogs, path),
+              *blog_actions(paged_blogs, path),
               pagination_buttons(current_page, total_pages, path)
-            ]
+            ].compact
 
             Responses::Keyboard.new(button_rows: button_rows)
           end
@@ -38,7 +38,7 @@ module Presentation
 
               blog = paged_blog[:item]
               text = blog.subscribed ? "❌ Unsubscribe from #{blog.title}" : "✅ Subscribe to #{blog.title}"
-              callback_data = blog.subscribed ? "disable_blog:#{blog.codename}|#{redirect_path}" : "enable_blog:#{blog.codename}|#{redirect_path}"
+              callback_data = blog.subscribed ? "unsubscribe:#{blog.codename}|#{redirect_path}" : "subscribe:#{blog.codename}|#{redirect_path}"
 
               Responses::Button.new(text: text, callback_data: callback_data)
             end

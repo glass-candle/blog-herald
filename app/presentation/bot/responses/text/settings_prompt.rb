@@ -8,7 +8,7 @@ module Presentation
           def render(is_opted_in:)
             case is_opted_in
             in true
-              "Hey! If you don't want to receieve any more blogpost updates, press the 'Unsubscribe' button down below."
+              "Hey! If you don't want to receive any more blogpost updates, press the 'Unsubscribe' button down below."
             in false
               "Hey! Press the 'Subscribe' button down below to start getting blogpost updates."
             end

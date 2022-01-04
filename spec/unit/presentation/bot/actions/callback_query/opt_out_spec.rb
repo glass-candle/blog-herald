@@ -25,7 +25,7 @@ RSpec.describe Presentation::Bot::Actions::CallbackQuery::OptOut, type: :unit_te
     before do
       allow(bot_adapter).to receive(:send_message).with(
         chat_id: chat_id,
-        text: "You have successfully unsubscribed and won't be receiving any updates."
+        text: 'You have unsubscribed and will sop be receiving any updates.'
       ).and_return(Dry::Monads::Result::Success.new(:ok))
 
       allow(bot_adapter).to receive(:edit_message_text).with(

@@ -6,7 +6,7 @@ ROM::SQL.migration do
       primary_key :id
       column :title, String, null: false
       column :link, String, null: false
-      foreign_key :blog_id, :blogs
+      foreign_key :blog_id, :blogs, null: false
 
       column :created_at, DateTime, null: false
       column :updated_at, DateTime, null: false

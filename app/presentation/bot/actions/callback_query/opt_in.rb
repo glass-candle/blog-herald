@@ -18,7 +18,7 @@ module Presentation
           def call(chat_id, message_id)
             yield opt_in.call(chat_id)
 
-            yield bot_adapter.send_message(chat_id: chat_id, text: 'You have successfully subscribed.')
+            yield bot_adapter.send_message(chat_id: chat_id, text: 'You have subscribed and will start receiving blogpost notifications.')
             bot_adapter.edit_message_text(
               chat_id: chat_id,
               message_id: message_id,

@@ -20,7 +20,7 @@ module Application
           chat = chat_repo.by_chat_uid(chat_uid)
           return Failure(:chat_not_found) unless chat
 
-          yield unsubscription_contract.call(chat_uid, blog_codename)
+          yield unsubscription_contract.call(chat_uid: chat_uid, blog_codename: blog_codename)
           chat_repo.unsubscribe_from_blog(chat, blog)
 
           Success(blog)
