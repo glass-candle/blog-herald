@@ -8,14 +8,11 @@ module Presentation
           def render(paged_blogs:, only_subscribed:)
             return empty_text(only_subscribed) if paged_blogs.empty?
 
+            is_single_page = paged_blogs.all? { |paged_blog| paged_blog[:in_page] }
             blog_list = paged_blogs.map do |paged_blog|
               blog = paged_blog[:item]
-              text = paged_blog[:in_page] ? " > #{blog.title} - #{blog.link}" : "#{blog.title} - #{blog.link}"
-              if only_subscribed
-                "✅ #{text}"
-              else
-                blog.subscribed ? "✅ #{text}" : "❌ #{text}"
-              end
+              text = paged_blog[:in_page] && !is_single_page ? " > #{blog.title} - #{blog.link}" : "#{blog.title} - #{blog.link}"
+              blog.subscribed ? "✅ #{text}" : "❌ #{text}"
             end.join("\n")
 
             list_text(blog_list, only_subscribed)

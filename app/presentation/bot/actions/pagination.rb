@@ -19,7 +19,7 @@ module Presentation
             page = regexp.match(path)&.[]('page')&.to_i
             raise ArgumentError, 'invalid page' unless page
 
-            pages_count = collection.size / page_size
+            pages_count = (collection.size - 1) / page_size
             page_number = page > pages_count || page.negative? ? 0 : page.to_i
 
             page_range = (page_number * page_size)..(page_number * page_size + page_size) - 1
