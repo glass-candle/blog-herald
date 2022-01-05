@@ -3,7 +3,7 @@ RSpec.describe Application::Operations::Chat::ListBlogStatuses, type: :unit_test
 
   let(:blog_repo) { instance_double('Application::Ports::Repositories::BlogRepo') }
 
-  let(:chat_uid) { 123_456 }
+  let(:chat_uid) { '123456' }
   let(:blogs) do
     [
       Domain::Entities::Blog.new(codename: 'blog_a', title: 'blog_a', link: 'link_a'),

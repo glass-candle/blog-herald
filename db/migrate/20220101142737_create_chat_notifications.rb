@@ -7,8 +7,8 @@ ROM::SQL.migration do
       foreign_key :chat_id, :chats, on_delete: :cascade, null: false
       foreign_key :post_id, :posts, on_delete: :cascade, null: false
 
-      column :created_at, DateTime, null: false
-      column :updated_at, DateTime, null: false
+      column :created_at, 'timestamp with time zone', null: false
+      column :updated_at, 'timestamp with time zone', null: false
     end
   end
 end

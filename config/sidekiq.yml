@@ -1,0 +1,5 @@
+max_retries: 10
+schedule:
+  enqueue_notifications:
+    cron: '0 0 * * * *' # every hour
+    class: "Presentation::Jobs::EnqueueNotifications"

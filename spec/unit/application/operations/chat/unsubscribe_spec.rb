@@ -11,7 +11,7 @@ RSpec.describe Application::Operations::Chat::Unsubscribe, type: :unit_test do
   let(:chat_repo) { instance_double('Application::Ports::Repositories::ChatRepo') }
   let(:blog_repo) { instance_double('Application::Ports::Repositories::BlogRepo') }
 
-  let(:chat_uid) { 123_456 }
+  let(:chat_uid) { '123456' }
   let(:blog_codename) { 'codename' }
   let(:chat) { Domain::Entities::Chat.new(chat_uid: chat_uid) }
   let(:blog) { Domain::Entities::Blog.new(codename: blog_codename, title: 'blog_a', link: 'link_a') }

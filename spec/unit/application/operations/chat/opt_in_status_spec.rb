@@ -3,7 +3,7 @@ RSpec.describe Application::Operations::Chat::OptInStatus, type: :unit_test do
 
   let(:chat_repo) { instance_double('Application::Ports::Repositories::ChatRepo') }
 
-  let(:chat_uid) { 123_456 }
+  let(:chat_uid) { '123456' }
   let(:chat) { Domain::Entities::Chat.new(chat_uid: chat_uid) }
 
   describe 'with chat present' do

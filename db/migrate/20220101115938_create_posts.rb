@@ -8,8 +8,8 @@ ROM::SQL.migration do
       column :link, String, null: false
       foreign_key :blog_id, :blogs, null: false
 
-      column :created_at, DateTime, null: false
-      column :updated_at, DateTime, null: false
+      column :created_at, 'timestamp with time zone', null: false
+      column :updated_at, 'timestamp with time zone', null: false
     end
   end
 end

@@ -9,7 +9,6 @@ App.boot(:zeitwerk) do
     module Core; end
 
     loader = Zeitwerk::Loader.new
-    # loader.inflector.inflect()
     loader.push_dir(App.config.root.join('app').realpath)
     loader.push_dir(App.config.root.join('core').realpath, namespace: Core)
     loader.setup

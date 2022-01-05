@@ -9,8 +9,6 @@ App.boot(:persistence) do |container|
     require 'pg'
     require 'rom'
     require 'rom-sql'
-
-    use :zeitwerk
   end
 
   start do

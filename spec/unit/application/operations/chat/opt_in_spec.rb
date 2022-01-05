@@ -4,7 +4,7 @@ RSpec.describe Application::Operations::Chat::OptIn, type: :unit_test do
   let(:chat_repo) { instance_double('Application::Ports::Repositories::ChatRepo') }
   let(:blog_repo) { instance_double('Application::Ports::Repositories::BlogRepo') }
 
-  let(:chat_uid) { 123_456 }
+  let(:chat_uid) { '123456' }
   let(:chat) { Domain::Entities::Chat.new(chat_uid: chat_uid) }
   let(:blogs) do
     [

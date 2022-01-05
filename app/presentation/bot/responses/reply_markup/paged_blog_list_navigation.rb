@@ -10,7 +10,7 @@ module Presentation
               navigation_buttons(path),
               *blog_actions(paged_blogs, path),
               pagination_buttons(current_page, total_pages, path)
-            ].compact
+            ]
 
             Responses::Keyboard.new(button_rows: button_rows)
           end

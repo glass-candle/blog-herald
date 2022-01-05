@@ -13,5 +13,8 @@ App.boot(:settings, from: :system) do
     key :database_url, Types::Coercible::String
 
     key :bot_token, Types::Coercible::String
+
+    key :redis_url, Types::Coercible::String
+    key :redis_pool_size, Types::Coercible::Integer.default(16)
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe Application::Operations::Chat::ListSubscribedBlogs, type: :unit_t
 
   let!(:blog_struct) { Struct.new(:codename, :title, :link, :subscribed) }
 
-  let(:chat_uid) { 123_456 }
+  let(:chat_uid) { '123456' }
   let(:subscribed_blog) { blog_struct.new('blog_c', 'blog_c', 'link_c', true) }
   let(:blogs) do
     [

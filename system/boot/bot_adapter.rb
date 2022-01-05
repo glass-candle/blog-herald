@@ -4,8 +4,6 @@ App.boot(:bot_adapter) do |container|
   init do
     use :utils
     use :settings
-    use :persistence
-    use :zeitwerk
 
     require 'telegram/bot'
 

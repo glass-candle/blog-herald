@@ -3,7 +3,7 @@
 module Domain
   module Entities
     class Chat < ROM::Struct
-      attribute :chat_uid, Types::Strict::Integer
+      attribute :chat_uid, Types::Strict::String
     end
   end
 end

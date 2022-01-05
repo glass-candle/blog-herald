@@ -17,16 +17,16 @@ module Application
           !chat.blogs.find { |blog| blog.codename == blog_codename }.nil?
         end
 
-        def create_with_blogs(chat_uid, blogs) # rubocop:disable Metrics/AbcSize
+        def create_with_blogs(chat_uid, blogs)
           chats.transaction do
             chat = chats
               .changeset(:create, chat_uid: chat_uid)
-              .map { |tuple| tuple.merge(created_at: Time.now.utc, updated_at: Time.now.utc) }
+              .map(:add_timestamps)
               .commit
 
             join_table_changeset = chats_blogs
               .changeset(:create, blogs.map { |blog| { blog_id: blog.id, chat_id: chat.id } })
-              .map { |tuple| tuple.merge(created_at: Time.now.utc, updated_at: Time.now.utc) }
+              .map(:add_timestamps)
             chats_blogs.command(:create, result: :many).call(join_table_changeset)
 
             chat
@@ -40,7 +40,7 @@ module Application
         def subscribe_to_blog(chat, blog)
           chats_blogs
             .changeset(:create, { blog_id: blog.id, chat_id: chat.id })
-            .map { |tuple| tuple.merge(created_at: Time.now.utc, updated_at: Time.now.utc) }
+            .map(:add_timestamps)
             .commit
         end
 
