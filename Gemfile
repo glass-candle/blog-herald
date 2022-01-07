@@ -20,8 +20,10 @@ gem 'nokogiri', '~> 1.12'
 gem 'oj', '~> 3.13'
 
 # Infrastructure
+gem 'selenium-webdriver', '~> 3.1'
 gem 'semantic_logger', '~> 4.8'
 gem 'sentry-ruby', '~> 4.7'
+gem 'sentry-sidekiq', '~> 4.8'
 gem 'sidekiq', '~> 6.2'
 gem 'sidekiq-scheduler', '~> 3.1'
 gem 'telegram-bot-ruby', '~> 0.16'
@@ -46,8 +48,4 @@ end
 group :test do
   gem 'rspec', '~> 3.0'
   gem 'simplecov', '~> 0.21'
-  gem 'webmock', '~> 3.13'
-
-  gem 'database_cleaner-sequel', '~> 2.0'
-  gem 'rom-factory', '~> 0.10'
 end

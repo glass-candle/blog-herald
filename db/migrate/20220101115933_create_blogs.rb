@@ -5,8 +5,8 @@ ROM::SQL.migration do
     create_table :blogs do
       primary_key :id
       column :codename, String, null: false, unique: true
-      column :title, String, null: false
-      column :link, String, null: false
+      column :title, String, null: false, unique: true
+      column :link, String, null: false, unique: true
 
       column :created_at, 'timestamp with time zone', null: false
       column :updated_at, 'timestamp with time zone', null: false

@@ -10,12 +10,6 @@ require 'dry/system/stubs'
 App.enable_stubs!
 App.finalize!
 
-require_relative 'support/vcr_config'
-require_relative 'support/db_cleaner'
-require_relative 'support/rom_factory'
-
-Dir[App.config.root.join('spec', 'support', '**', '*.rb')].sort.each { |file| require file }
-
 RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_doubled_constant_names = true

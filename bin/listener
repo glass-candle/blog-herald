@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require_relative '../config/application'
+
+App.finalize!
+
+Presentation::Bot.new.poll

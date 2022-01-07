@@ -50,6 +50,9 @@ module Presentation
             message.chat_id
           end
 
+        App[:sentry_adapter].add_tags(chat_uid: chat_id)
+        App[:sentry_adapter].add_breadcrumb(result.failure, :failure, 'Failure')
+        App[:sentry_adapter].capture_message('Action failure')
         bot_adapter.send_message(chat_id: chat_id, text: 'Whoops! Something went wrong, try again.')
 
         result

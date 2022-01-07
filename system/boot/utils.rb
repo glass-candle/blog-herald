@@ -15,7 +15,8 @@ App.boot(:utils) do
     Dry::Validation.load_extensions(:monads)
     Import = App.injector
 
+    require 'uri'
     require 'oj'
-    require 'typhoeus'
+    require 'nokogiri'
   end
 end

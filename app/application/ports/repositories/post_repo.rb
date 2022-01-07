@@ -27,6 +27,13 @@ module Application
         def all_by_ids_with_blogs(post_ids)
           posts.combine(:blogs).where(id: post_ids).to_a
         end
+
+        def create_posts(post_dtos, blog_id)
+          create_changeset = posts
+            .changeset(:create, post_dtos.map { |post_dto| { title: post_dto.title, link: post_dto.link, blog_id: blog_id } })
+            .map(:add_timestamps)
+          posts.command(:create, result: :many).call(create_changeset)
+        end
       end
     end
   end

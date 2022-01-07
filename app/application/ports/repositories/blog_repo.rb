@@ -6,6 +6,16 @@ module Application
       class BlogRepo < Core::Application::Ports::BaseRepository[:blogs]
         commands :create, use: :timestamps, plugins_options: { timestamps: { timestamps: %i[created_at updated_at] } }
 
+        def upsert(blog_dtos)
+          blog_dtos.map do |blog|
+            blogs.upsert({ codename: blog.codename, title: blog.title, link: blog.link, created_at: Time.now.utc, updated_at: Time.now.utc })
+          end
+        end
+
+        def delete_by_codenames(codenames)
+          blogs.where(codename: codenames).delete
+        end
+
         def by_codename(codename)
           blogs.where(codename: codename).limit(1).one
         end
@@ -22,6 +32,10 @@ module Application
             end
             .order(:title)
             .to_a
+        end
+
+        def with_posts(id)
+          blogs.combine(:posts).where(id: id).one
         end
       end
     end

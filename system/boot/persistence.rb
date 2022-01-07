@@ -12,8 +12,6 @@ App.boot(:persistence) do |container|
   end
 
   start do
-    # TODO: configure an SSL connection
-
     options = {
       encoding: 'UTF8',
       connect_timeout: 10
