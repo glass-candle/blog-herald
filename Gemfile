@@ -20,7 +20,6 @@ gem 'nokogiri', '~> 1.12'
 gem 'oj', '~> 3.13'
 
 # Infrastructure
-gem 'selenium-webdriver', '~> 3.1'
 gem 'semantic_logger', '~> 4.8'
 gem 'sentry-ruby', '~> 4.7'
 gem 'sentry-sidekiq', '~> 4.8'

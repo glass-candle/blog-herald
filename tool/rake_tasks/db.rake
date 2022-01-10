@@ -3,7 +3,7 @@ require 'rom/sql/rake_task'
 
 namespace :db do
   task :setup do
-    App.start(:persistence)
-    ROM::SQL::RakeSupport.env = App[:rom_container]
+    App.init(:persistence)
+    ROM::SQL::RakeSupport.env = App[:rom_config]
   end
 end

@@ -4,38 +4,29 @@ module Infra
   class Crawler
     module Handlers
       class Netflix
-        include Import['selenium_adapter']
+        include Import['core.infra.http_client']
 
         include Dry::Monads::Do.for(:call)
 
         include Dry::Monads::Result::Mixin
 
-        URL = 'https://netflixtechblog.com/'
+        URL = 'https://medium.com/feed/netflix-techblog'
 
         def call
-          articles = selenium_adapter.with_driver do |driver|
-            driver.navigate.to(URL)
-            waiter = selenium_adapter.waiter
-
-            articles = waiter.until do
-              driver.find_elements(:xpath, '//a[@data-post-id]')
-            end
-
-            articles.map do |element|
-              { text: element.text, href: element['href'] }
-            end
-          end
-
-          parse_articles(articles)
+          xml_document = yield http_client.execute_request(URL, method: :get)
+          parse_page(xml_document)
         end
 
         private
 
-        def parse_articles(articles)
+        def parse_page(xml_document)
+          articles = xml_document.xpath('/rss/channel/item')
           posts = articles.map do |article|
-            url = URI.parse(article[:href])
+            title = article.xpath('title').text
+            url = URI.parse(article.xpath('link').text)
             url.query = nil
-            Crawler::PostDTO.new(article[:text].split("\n").first, url.to_s)
+
+            Crawler::PostDTO.new(title, url.to_s)
           end
 
           Success(posts)
